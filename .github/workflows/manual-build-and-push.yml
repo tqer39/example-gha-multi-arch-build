@@ -41,14 +41,18 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push
-        uses: docker/build-push-action@v2
         id: build-and-push
+        uses: docker/build-push-action@v2
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: nginx
+          IMAGE_TAG: latest
         with:
           context: .
           file: ./Dockerfile
           platforms: linux/arm64
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: 107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:latest
+          tags: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
