@@ -40,17 +40,13 @@ jobs:
       - name: Pull, tag, and push image to Amazon ECR
         id: pull-and-push
         uses: docker/build-push-action@v2
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: nginx
-          IMAGE_TAG: latest
         with:
           platforms: linux/arm64
           builder: ${{ steps.buildx.outputs.name }}
           pull: true
           push: true
           tags:
-            107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:$IMAGE_TAG
+            107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:latest
             107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:1.21.6-arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
