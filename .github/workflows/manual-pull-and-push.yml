@@ -13,7 +13,7 @@ env:
 concurrency: ci-${{ github.ref }}
 
 jobs:
-  build:
+  pull-and-push:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
