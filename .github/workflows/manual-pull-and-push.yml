@@ -50,7 +50,7 @@ jobs:
           pull: true
           push: true
           tags:
-            $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-            $ECR_REGISTRY/$ECR_REPOSITORY:1.21.6-arm64
+            107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:$IMAGE_TAG
+            107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:1.21.6-arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
