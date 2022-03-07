@@ -18,8 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
-      ecr_username: ${{ steps.login-ecr.outputs.docker_username_107662415716_dkr_ecr_ap_northeast_1_amazonaws_com }}
-      ecr_password: ${{ steps.login-ecr.outputs.docker_password_107662415716_dkr_ecr_ap_northeast_1_amazonaws_com }}
+      ecr_password: ${{ steps.get_password.outputs.password }}
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -28,9 +27,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+      - name: Get ECR Password
+        id: get_password
+        run: echo "::set-output name=password::$(aws ecr get-login-password)"
 
   test:
     needs: login
@@ -39,7 +38,7 @@ jobs:
     container:
       image: 107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:latest
       credentials:
-        username: ${{ needs.login.outputs.ecr_username }}
+        username: AWS
         password: ${{ needs.login.outputs.ecr_password }}
     services:
       dynamodb:
