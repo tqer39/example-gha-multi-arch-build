@@ -37,3 +37,16 @@ jobs:
       credentials:
         username: ${{ needs.login.outputs.ecr_username }}
         password: ${{ needs.login.outputs.ecr_password }}
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
+        ports:
+          - 8000:8000
+        env:
+          PSLOG: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Echo Test
+        run: |
+          echo "Test !!!!!!"
