@@ -1,0 +1,39 @@
+---
+name: Branch (main)
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ci-${{ github.ref }}
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ap-northeast-1
+
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      ecr_username: ${{ steps.login-ecr.outputs.docker_username_107662415716_dkr_ecr_ap_northeast_1_amazonaws_com }}
+      ecr_password: ${{ steps.login-ecr.outputs.docker_password_107662415716_dkr_ecr_ap_northeast_1_amazonaws_com }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+  test:
+    needs: login
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    container:
+      image: 107662415716.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:latest
+      credentials:
+        username: ${{ needs.login.outputs.ecr_username }}
+        password: ${{ needs.login.outputs.ecr_password }}
