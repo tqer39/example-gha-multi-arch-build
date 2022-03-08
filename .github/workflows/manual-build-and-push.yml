@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
-        id: setup-buildx
+        id: buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Cache Docker layers
