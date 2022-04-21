@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      # - name: Checkout
+      #   uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         id: setup-buildx
@@ -36,7 +36,7 @@ jobs:
       - name: Get Version
         id: get-version
         run: |
-          echo "VERSION=4" >> $GITHUB_ENV
+          echo "VERSION=5" >> $GITHUB_ENV
 
       - name: Login to Amazon ECR
         id: login-ecr
