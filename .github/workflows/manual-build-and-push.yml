@@ -48,8 +48,8 @@ jobs:
           ECR_REPOSITORY: nginx
           IMAGE_TAG: arm64_and_amd64
         with:
-          context: .
-          file: ./Dockerfile
+          # context: .
+          # file: ./Dockerfile
           platforms: linux/arm64,linux/amd64
           builder: ${{ steps.buildx.outputs.name }}
           push: true
