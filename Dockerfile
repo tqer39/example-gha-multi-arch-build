@@ -1,4 +1,4 @@
-FROM nginx:1.25.4
+FROM nginx:1.25.5
 
 COPY ./update.txt /tmp/update.txt
 
